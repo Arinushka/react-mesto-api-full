@@ -94,7 +94,7 @@ class Api {
 export const api = new Api({
   baseUrl: 'http://api.hakuna.matata.nomoredomains.monster',
   headers: {
-    authorization: 'cb025162-3fd1-4801-ae0e-3ba5aa323c64',
+    authorization: localStorage.getItem('token'),
     'Content-Type': 'application/json'
   }
 });
