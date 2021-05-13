@@ -12,6 +12,7 @@ const {
 const auth = require('./middlewares/auth');
 const urlValidation = require('./errors/celebrateError');
 const NotFoundError = require('./errors/notFoundError');
+const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 app.use(bodyParser.json()); // для собирания JSON-формата
 app.use(bodyParser.urlencoded({ extended: true })); // для приёма веб-страниц внутри POST-запроса
@@ -22,6 +23,8 @@ mongoose.connect('mongodb://localhost:27017/mestodb', {
   useUnifiedTopology: true,
   useFindAndModify: false,
 });
+
+app.use(requestLogger);
 
 app.post('/signin', celebrate({
   body: Joi.object().keys({
@@ -42,6 +45,8 @@ app.post('/signup', celebrate({
 app.use(auth);
 app.use('/users', require('./routes/users'));
 app.use('/cards', require('./routes/cards'));
+
+app.use(errorLogger);
 
 app.use('*', (req, res, next) => { // eslint-disable-line
   next(new NotFoundError('Ресурс не найден'));
