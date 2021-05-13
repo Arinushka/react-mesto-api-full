@@ -3,7 +3,7 @@ const cors = require('cors');
 
 const { PORT = 3000 } = process.env;
 const app = express();
-app.use(cors());
+
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const { errors } = require('celebrate');
@@ -28,7 +28,8 @@ mongoose.connect('mongodb://localhost:27017/mestodb', {
 });
 
 app.use(requestLogger);
-
+app.use(cors());
+app.options('*', cors());
 app.post('/signin', celebrate({
   body: Joi.object().keys({
     email: Joi.string().required().email(),
