@@ -90,7 +90,7 @@ class Api {
     }
   }
 }
-const token = localStorage.getItem('jwt')
+const token = localStorage.getItem('token')
 export const api = new Api({
   baseUrl: 'http://api.hakuna.matata.nomoredomains.monster',
   headers: {
