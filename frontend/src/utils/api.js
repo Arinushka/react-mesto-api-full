@@ -92,7 +92,7 @@ class Api {
 }
 
 export const api = new Api({
-  baseUrl: 'https://api.hakuna.matata.nomoredomains.monster',
+  baseUrl: 'http://api.hakuna.matata.nomoredomains.monster',
   headers: {
     authorization: 'cb025162-3fd1-4801-ae0e-3ba5aa323c64',
     'Content-Type': 'application/json'
