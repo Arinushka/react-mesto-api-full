@@ -20,7 +20,7 @@ module.exports.createCard = (req, res, next) => {
 module.exports.getCards = (req, res, next) => {
   Card.find({})
     .populate(['owner', 'likes'])
-    .then((card) => res.send({ data: card }))
+    .then((card) => res.send(card))
     .catch((err) => {
       if (err.name === 'CastError') {
         next(new InvalidRequestError('Переданы некорректные данные'));
