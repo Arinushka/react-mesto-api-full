@@ -209,7 +209,7 @@ function App(props) {
           if (res) {
             setLoggedIn(true);
             props.history.push("/");
-            setEmail(res.data.email);
+            setEmail(res.email);
           }
         })
         .catch((err) => {
