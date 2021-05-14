@@ -6,7 +6,6 @@ function Card(props) {
   const currentUser = React.useContext(CurrentUserContext);
 
   /*сравниваю айди карточки с айди юзера*/
-  console.log(card);
   const isOwn = card.owner._id === currentUser._id;
 
   /*прохожу циклом по массиву с лайками и сраниваю кому принадлежит лайк (юзеру или нет)*/
