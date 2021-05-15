@@ -1,3 +1,4 @@
+const { NODE_ENV, JWT_SECRET } = process.env;
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
@@ -6,14 +7,12 @@ const InvalidRequestError = require('../errors/invalidRequestError');
 const MongoError = require('../errors/mongoError');
 const UnauthorizedError = require('../errors/unauthorizedError');
 
-const secretKey = '078bf48e82773a1597471265ccc5c2e06f9495522e626961f95b34a726edaa23';
-
 module.exports.login = (req, res, next) => {
   const { email, password } = req.body;
 
   return User.findUserByCredentials(email, password)
     .then((user) => {
-      const token = jwt.sign({ _id: user._id }, secretKey, { expiresIn: '7d' });
+      const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret', { expiresIn: '7d' });
       res.send({ token });
       res.cookie('jwt', token, {
         maxAge: '7d',
