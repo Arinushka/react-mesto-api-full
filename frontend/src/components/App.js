@@ -118,8 +118,9 @@ function App(props) {
 
   /*получение данных о пользователе и карточек + использование их на странице*/
   React.useEffect(() => {
+    if(loggedIn){
     setLoading(true);
-    Promise.all([api.getUserInfo(), api.getInitialCards()])
+    Promise.all([api.getUserInfo(localStorage.getItem('token')), api.getInitialCards(localStorage.getItem('token'))])
       .then(([userInfo, cardList]) => {
         setCurrentUser(userInfo);
         setCards(cardList);
@@ -129,7 +130,8 @@ function App(props) {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+    }
+  }, [loggedIn]);
 
   /*функция постановки лайка*/
   function handleCardLike(card) {

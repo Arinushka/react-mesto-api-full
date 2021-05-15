@@ -1,7 +1,7 @@
 class Api {
-  constructor(options) {
-    this.baseUrl = options.baseUrl;
-    this.headers = options.headers;
+  constructor(baseUrl, contentType) {
+    this.baseUrl = baseUrl;
+    this.contentType = contentType;
   }
   _checkResponse(res) {
     if (res.ok) {
@@ -9,16 +9,22 @@ class Api {
     }
     return Promise.reject(`Ошибка ${res.status}`);
   }
-  getInitialCards() {
+  getInitialCards(token) {
     return fetch(`${this.baseUrl}/cards`, {
-      headers: this.headers
+      headers:{
+        authorization: 'Bearer ' + token,
+        'Content-Type': this.contentType,
+      }
     })
       .then(this._checkResponse)
   }
 
-  getUserInfo() {
+  getUserInfo(token) {
     return fetch(`${this.baseUrl}/users/me`, {
-      headers: this.headers
+      headers:{
+        authorization: 'Bearer ' + token,
+        'Content-Type': this.contentType,
+      }
     })
       .then(this._checkResponse)
   }
@@ -90,10 +96,7 @@ class Api {
     }
   }
 }
-export const api = new Api({
-  baseUrl: 'http://api.hakuna.matata.nomoredomains.monster',
-  headers: {
-    authorization: 'Bearer ' + localStorage.getItem('token'),
-    'Content-Type': 'application/json'
-  }
-});
+export const api = new Api(
+ 'http://api.hakuna.matata.nomoredomains.monster',
+ 'application/json'
+);
