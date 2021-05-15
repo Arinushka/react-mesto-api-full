@@ -136,7 +136,7 @@ function App(props) {
   /*функция постановки лайка*/
   function handleCardLike(card) {
     const isLiked = card.likes.some((i) => i._id === currentUser._id);
-    api.changeLikeCardStatus(card._id, !isLiked)
+    api.changeLikeCardStatus(card._id, !isLiked, localStorage.getItem('token'))
       .then((newCard) => {
         setCards((state) =>
           state.map((c) => (c._id === card._id ? newCard : c))
@@ -154,7 +154,7 @@ function App(props) {
 
   function handleCardDelete(card) {
     handleButton(true, "Удаление...", setButtonDelete);
-    api.deleteCard(card._id)
+    api.deleteCard(card._id, localStorage.getItem('token'))
       .then(() => {
         handleButton(false, "Да", setButtonDelete);
         setCards((state) => state.filter((item) => item._id !== card._id));
@@ -166,7 +166,7 @@ function App(props) {
   /*обновление данных о пользователе*/
   function handleUpdateUser({ name, about }) {
     handleButton(true, "Сохранение...", setButtonSave);
-    api.setUserInfo(name, about)
+    api.setUserInfo(name, about, localStorage.getItem('token'))
       .then((data) => {
         setCurrentUser(data);
         handleButton(false, "Сохранить", setButtonSave);
@@ -179,7 +179,7 @@ function App(props) {
 
   function handleUpdateAvatar({ avatar }) {
     handleButton(true, "Сохранение...", setButtonSave);
-    api.updateAvatarImage(avatar)
+    api.updateAvatarImage(avatar, localStorage.getItem('token'))
       .then((data) => {
         setCurrentUser(data);
         handleButton(false, "Сохранить", setButtonSave);
@@ -192,7 +192,7 @@ function App(props) {
   /*добавление новой карточки*/
   function handleAddPlace({ name, link }) {
     handleButton(true, "Создание...", setButtonAdd);
-    api.addCard(name, link)
+    api.addCard(name, link, localStorage.getItem('token'))
       .then((newCard) => {
         setCards([newCard, ...cards]);
         handleButton(false, "Создать", setButtonAdd);
