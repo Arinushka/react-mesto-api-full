@@ -296,11 +296,11 @@ function App(props) {
           onCardDelete={handleDeleteCard}
           isLoading={loading}
           loggedIn={loggedIn} />
-        <Route exact path="/signin">
+        <Route exact path="/sign-in">
           <Login
             onLogin={handleLogin} />
         </Route>
-        <Route exact path="/signup">
+        <Route exact path="/sign-up">
           <Register
             onRegister={handleRegister}
             isAuth={isAuth}
