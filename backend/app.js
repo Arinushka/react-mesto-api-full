@@ -28,7 +28,6 @@ mongoose.connect('mongodb://localhost:27017/mestodb', {
 });
 
 app.use(requestLogger);
-app.use(cors());
 
 app.post('/signin', celebrate({
   body: Joi.object().keys({
@@ -45,6 +44,8 @@ app.post('/signup', celebrate({
     password: Joi.string().required(),
   }),
 }), createUser);
+
+app.use(cors());
 
 app.use(auth);
 app.use('/users', require('./routes/users'));
