@@ -115,6 +115,6 @@ class Api {
   }
 }
 export const api = new Api(
- 'http://api.hakuna.matata.nomoredomains.monster',
+ 'https://api.hakuna.matata.nomoredomains.monster',
  'application/json'
 );
