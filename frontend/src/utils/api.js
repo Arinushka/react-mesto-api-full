@@ -11,6 +11,7 @@ class Api {
   }
   getInitialCards() {
     return fetch(`${this.baseUrl}/cards`, {
+      method: 'GET',
       credentials: 'include',
       headers:{
         'Content-Type': this.contentType,
@@ -21,6 +22,7 @@ class Api {
 
   getUserInfo() {
     return fetch(`${this.baseUrl}/users/me`, {
+      method: 'GET',
       credentials: 'include',
       headers:{
         'Content-Type': this.contentType,
