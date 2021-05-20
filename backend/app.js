@@ -30,7 +30,10 @@ mongoose.connect('mongodb://localhost:27017/mestodb', {
 });
 
 app.use(requestLogger);
-app.use(cors());
+app.use(cors({
+  origin: 'https://hakuna.matata.nomoredomains.club',
+  credentials: true,
+}));
 
 app.post('/signin', celebrate({
   body: Joi.object().keys({
