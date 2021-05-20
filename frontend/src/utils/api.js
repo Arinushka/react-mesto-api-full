@@ -9,20 +9,20 @@ class Api {
     }
     return Promise.reject(`Ошибка ${res.status}`);
   }
-  getInitialCards(token) {
+  getInitialCards() {
     return fetch(`${this.baseUrl}/cards`, {
+      credentials: 'include',
       headers:{
-        authorization: 'Bearer ' + token,
         'Content-Type': this.contentType,
       }
     })
       .then(this._checkResponse)
   }
 
-  getUserInfo(token) {
+  getUserInfo() {
     return fetch(`${this.baseUrl}/users/me`, {
+      credentials: 'include',
       headers:{
-        authorization: 'Bearer ' + token,
         'Content-Type': this.contentType,
       }
     })

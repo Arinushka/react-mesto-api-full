@@ -120,7 +120,7 @@ function App(props) {
   React.useEffect(() => {
     if(loggedIn){
     setLoading(true);
-    Promise.all([api.getUserInfo(localStorage.getItem('token')), api.getInitialCards(localStorage.getItem('token'))])
+    Promise.all([api.getUserInfo(), api.getInitialCards()])
       .then(([userInfo, cardList]) => {
         setCurrentUser(userInfo);
         setCards(cardList);
