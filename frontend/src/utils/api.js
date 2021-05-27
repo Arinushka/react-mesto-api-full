@@ -34,8 +34,8 @@ class Api {
   setUserInfo(newName, newAbout, token) {
     return fetch(`${this.baseUrl}/users/me`, {
       method: 'PATCH',
+      credentials: 'include',
       headers:{
-        authorization: 'Bearer ' + token,
         'Content-Type': this.contentType,
       },
       body: JSON.stringify({
@@ -46,11 +46,11 @@ class Api {
       .then(this._checkResponse)
   }
 
-  addCard(name, link, token) {
+  addCard(name, link) {
     return fetch(`${this.baseUrl}/cards`, {
       method: 'POST',
+      credentials: 'include',
       headers:{
-        authorization: 'Bearer ' + token,
         'Content-Type': this.contentType,
       },
       body: JSON.stringify({
@@ -117,6 +117,6 @@ class Api {
   }
 }
 export const api = new Api(
- 'https://api.hakuna.matata.nomoredomains.monster',
+ 'http://localhost:3001',
  'application/json'
 );

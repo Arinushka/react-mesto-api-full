@@ -1,4 +1,4 @@
-export const BASE_URL = 'https://api.hakuna.matata.nomoredomains.monster';
+export const BASE_URL = 'http://localhost:3001';
 
 export const register = (email, password) => {
   return fetch(`${BASE_URL}/signup`, {
@@ -31,8 +31,6 @@ export const authorize = (email, password) => {
     .then(res => {
       if (!res.ok) {
         return Promise.reject(res.status)
-      } else {
-        return res.json();
       }
     })
 };
@@ -42,15 +40,12 @@ export const checkToken = (token) => {
     method: 'GET',
     credentials: 'include',
     headers: {
-      "Content-Type": "application/json",
-      "Authorization": `Bearer ${token}`
+      "Content-Type": "application/json"
     }
   })
     .then(res => {
       if (!res.ok) {
         return Promise.reject(res.status)
-      } else {
-        return res.json();
       }
     })
 };

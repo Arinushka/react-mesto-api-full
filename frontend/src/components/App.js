@@ -166,7 +166,7 @@ function App(props) {
   /*обновление данных о пользователе*/
   function handleUpdateUser({ name, about }) {
     handleButton(true, "Сохранение...", setButtonSave);
-    api.setUserInfo(name, about, localStorage.getItem('token'))
+    api.setUserInfo(name, about)
       .then((data) => {
         setCurrentUser(data);
         handleButton(false, "Сохранить", setButtonSave);
@@ -192,7 +192,7 @@ function App(props) {
   /*добавление новой карточки*/
   function handleAddPlace({ name, link }) {
     handleButton(true, "Создание...", setButtonAdd);
-    api.addCard(name, link, localStorage.getItem('token'))
+    api.addCard(name, link)
       .then((newCard) => {
         setCards([newCard, ...cards]);
         handleButton(false, "Создать", setButtonAdd);
@@ -204,9 +204,7 @@ function App(props) {
   }
   /*проверка токена для авторизованного пользователя*/
   function handleTokenCheck() {
-    if (localStorage.getItem("token")) {
-      const token = localStorage.getItem("token");
-      auth.checkToken(token)
+      auth.checkToken()
         .then((res) => {
           if (res) {
             setLoggedIn(true);
@@ -215,10 +213,8 @@ function App(props) {
           }
         })
         .catch((err) => {
-          localStorage.removeItem('token');
           console.log(err)
         });
-    }
   }
 
   React.useEffect(() => {
@@ -233,7 +229,6 @@ function App(props) {
   function handleLogin(email, password) {
     auth.authorize(email, password)
       .then((res) => {
-        localStorage.setItem('token', res.token);
         setEmail(email);
         setLoggedIn(true);
         setExit(true);
@@ -260,7 +255,6 @@ function App(props) {
   }
   /*обработка выхода пользователя из профиля*/
   function handleSignOut() {
-    localStorage.removeItem('token');
     props.history.push('/sign-in');
     setExit(false);
     setEmail('');
