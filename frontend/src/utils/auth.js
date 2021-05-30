@@ -35,9 +35,25 @@ export const authorize = (email, password) => {
     })
 };
 
-export const checkToken = (token) => {
+export const checkToken = () => {
   return fetch(`${BASE_URL}/users/me`, {
     method: 'GET',
+    credentials: 'include',
+    headers: {
+      "Content-Type": "application/json"
+    }
+  })
+    .then(res => {
+      if (!res.ok) {
+        return Promise.reject(res.status)
+      } else {
+        return res.json();
+      }
+    })
+};
+export const signOut = () => {
+  return fetch(`${BASE_URL}/users/me`, {
+    method: 'DELETE',
     credentials: 'include',
     headers: {
       "Content-Type": "application/json"

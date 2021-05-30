@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const { celebrate, Joi } = require('celebrate');
 const {
-  getUser, getUsers, updateProfile, updateAvatar, getUserMe,
+  getUser, getUsers, updateProfile, updateAvatar, getUserMe, signOut,
 } = require('../controllers/users');
 const urlValidation = require('../errors/celebrateError');
 
@@ -23,5 +23,6 @@ router.patch('/me/avatar', celebrate({
     avatar: Joi.string().custom(urlValidation).required(),
   }),
 }), updateAvatar);
+router.delete('/me', signOut);
 
 module.exports = router;

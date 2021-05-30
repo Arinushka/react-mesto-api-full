@@ -9,22 +9,22 @@ const UnauthorizedError = require('../errors/unauthorizedError');
 
 module.exports.login = (req, res, next) => {
   const { email, password } = req.body;
-
   return User.findUserByCredentials(email, password)
     .then((user) => {
-      const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret', { expiresIn: '7d' });
-      // res.send({ token });
+      const token = jwt.sign(
+        { _id: user._id },
+        NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
+        { expiresIn: '7d' },
+      );
       res.cookie('jwt', `Bearer ${token}`, {
-        maxAge: 3600,
+        maxAge: 3600000,
         httpOnly: true,
-      }).end();
+      })
+        .end();
     })
     .catch((err) => {
-      if (err.name === 'CastError') {
-        next(new InvalidRequestError('Переданы некорректные данные'));
-      } else if (err.name === 'Error') {
-        next(new UnauthorizedError('Неправильные почта или пароль'));
-      }next(err);
+      if (err.name === 'Error') next(new UnauthorizedError('Неправильные почта или пароль'));
+      next(err);
     });
 };
 
@@ -137,4 +137,7 @@ module.exports.updateAvatar = (req, res, next) => {
         next(err);
       }
     });
+};
+module.exports.signOut = (req, res) => {
+  res.clearCookie('jwt').end();
 };

@@ -136,7 +136,7 @@ function App(props) {
   /*функция постановки лайка*/
   function handleCardLike(card) {
     const isLiked = card.likes.some((i) => i._id === currentUser._id);
-    api.changeLikeCardStatus(card._id, !isLiked, localStorage.getItem('token'))
+    api.changeLikeCardStatus(card._id, !isLiked)
       .then((newCard) => {
         setCards((state) =>
           state.map((c) => (c._id === card._id ? newCard : c))
@@ -154,7 +154,7 @@ function App(props) {
 
   function handleCardDelete(card) {
     handleButton(true, "Удаление...", setButtonDelete);
-    api.deleteCard(card._id, localStorage.getItem('token'))
+    api.deleteCard(card._id)
       .then(() => {
         handleButton(false, "Да", setButtonDelete);
         setCards((state) => state.filter((item) => item._id !== card._id));
@@ -179,7 +179,7 @@ function App(props) {
 
   function handleUpdateAvatar({ avatar }) {
     handleButton(true, "Сохранение...", setButtonSave);
-    api.updateAvatarImage(avatar, localStorage.getItem('token'))
+    api.updateAvatarImage(avatar)
       .then((data) => {
         setCurrentUser(data);
         handleButton(false, "Сохранить", setButtonSave);
@@ -204,17 +204,19 @@ function App(props) {
   }
   /*проверка токена для авторизованного пользователя*/
   function handleTokenCheck() {
+    if (localStorage.getItem('auth')) {
       auth.checkToken()
-        .then((res) => {
-          if (res) {
-            setLoggedIn(true);
-            props.history.push("/");
-            setEmail(res.email);
-          }
-        })
-        .catch((err) => {
-          console.log(err)
-        });
+      .then((res) => {
+        if (res) {
+          setLoggedIn(true);
+          props.history.push("/");
+          setEmail(res.email);
+        }
+      })
+      .catch((err) => {
+        console.log(err)
+      });
+    }
   }
 
   React.useEffect(() => {
@@ -233,6 +235,7 @@ function App(props) {
         setLoggedIn(true);
         setExit(true);
         props.history.push('/');
+        localStorage.setItem('auth', true);
       })
       .catch((err) => {
         handleFailPopupClick();
@@ -256,11 +259,18 @@ function App(props) {
   /*обработка выхода пользователя из профиля*/
   function handleSignOut() {
     props.history.push('/sign-in');
-    setExit(false);
-    setEmail('');
-    setLoggedIn(false);
-    console.log(props.loggedIn);
-    setHamburger(false);
+    auth.signOut()
+    .then((res) => {
+      setExit(false);
+      setEmail('');
+      setLoggedIn(false);
+      setHamburger(false);
+      localStorage.removeItem('auth');
+    })
+    .catch((err) => {
+      console.log(err)
+    }
+    );
   }
 
   return (

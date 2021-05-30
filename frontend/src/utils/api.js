@@ -65,19 +65,19 @@ class Api {
   deleteCard(cardId, token) {
     return fetch(`${this.baseUrl}/cards/${cardId}`, {
       method: 'DELETE',
+      credentials: 'include',
       headers:{
-        authorization: 'Bearer ' + token,
         'Content-Type': this.contentType,
       },
 
     })
       .then(this._checkResponse)
   }
-  updateAvatarImage(imageUrl, token) {
+  updateAvatarImage(imageUrl) {
     return fetch(`${this.baseUrl}/users/me/avatar`, {
       method: 'PATCH',
+      credentials: 'include',
       headers:{
-        authorization: 'Bearer ' + token,
         'Content-Type': this.contentType,
       },
       body: JSON.stringify({
@@ -86,22 +86,22 @@ class Api {
     })
       .then(this._checkResponse)
   }
-  addLike(cardId, token) {
+  addLike(cardId) {
     return fetch(`${this.baseUrl}/cards/${cardId}/likes`, {
       method: 'PUT',
+      credentials: 'include',
       headers:{
-        authorization: 'Bearer ' + token,
         'Content-Type': this.contentType,
       }
 
     })
       .then(this._checkResponse)
   }
-  removeLike(cardId, token) {
+  removeLike(cardId) {
     return fetch(`${this.baseUrl}/cards/${cardId}/likes`, {
       method: 'DELETE',
+      credentials: 'include',
       headers:{
-        authorization: 'Bearer ' + token,
         'Content-Type': this.contentType,
       }
 
