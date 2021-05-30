@@ -117,6 +117,6 @@ class Api {
   }
 }
 export const api = new Api(
- 'http://localhost:3001',
+ 'https://api.hakuna.matata.nomoredomains.monster',
  'application/json'
 );
