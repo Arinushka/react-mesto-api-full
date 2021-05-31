@@ -52,8 +52,8 @@ export const checkToken = () => {
     })
 };
 export const signOut = () => {
-  return fetch(`${BASE_URL}/users/me`, {
-    method: 'POST',
+  return fetch(`${BASE_URL}/users/me/signout`, {
+    method: 'GET',
     credentials: 'include',
     headers: {
       "Content-Type": "application/json"
