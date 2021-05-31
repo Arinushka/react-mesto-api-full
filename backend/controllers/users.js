@@ -18,8 +18,9 @@ module.exports.login = (req, res, next) => {
       );
       res.cookie('jwt', 'Bearer ' + token, { // eslint-disable-line
         maxAge: 3600000,
+        secure: true,
         httpOnly: true,
-        SameSite: 'none',
+        sameSite: 'None',
       })
         .end();
     })
