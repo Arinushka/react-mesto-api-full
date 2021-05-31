@@ -3,7 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 
-const { PORT = 3001 } = process.env;
+const { PORT = 3000 } = process.env;
 const app = express();
 app.use(cookieParser());
 const mongoose = require('mongoose');
@@ -75,5 +75,5 @@ app.use((err, req, res, next) => {  // eslint-disable-line
         : message,
     });
 });
-console.log();// eslint-disable-line
+
 app.listen(PORT);
