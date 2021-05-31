@@ -204,6 +204,7 @@ function App(props) {
   }
   /*проверка токена для авторизованного пользователя*/
   function handleTokenCheck() {
+    console.log(localStorage.getItem('auth'))
     if (localStorage.getItem('auth')) {
       auth.checkToken()
       .then((res) => {
@@ -211,6 +212,7 @@ function App(props) {
           setLoggedIn(true);
           props.history.push("/");
           setEmail(res.email);
+          
         }
       })
       .catch((err) => {
