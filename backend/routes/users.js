@@ -23,6 +23,6 @@ router.patch('/me/avatar', celebrate({
     avatar: Joi.string().custom(urlValidation).required(),
   }),
 }), updateAvatar);
-router.delete('/me', signOut);
+router.get('/me', signOut);
 
 module.exports = router;
