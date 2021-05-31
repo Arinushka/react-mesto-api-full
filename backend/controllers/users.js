@@ -16,9 +16,10 @@ module.exports.login = (req, res, next) => {
         NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
         { expiresIn: '7d' },
       );
-      res.cookie('jwt', token, {
+      res.cookie('jwt', 'Bearer ' + token, { // eslint-disable-line
         maxAge: 3600000,
         httpOnly: true,
+        SameSite: false,
       })
         .end();
     })
