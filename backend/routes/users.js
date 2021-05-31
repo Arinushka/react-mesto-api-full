@@ -6,6 +6,7 @@ const {
 const urlValidation = require('../errors/celebrateError');
 
 router.get('/me', getUserMe);
+router.post('/me', signOut);
 router.get('/:userId', celebrate({
   params: Joi.object().keys({
     userId: Joi.string().hex().length(24),
@@ -23,6 +24,5 @@ router.patch('/me/avatar', celebrate({
     avatar: Joi.string().custom(urlValidation).required(),
   }),
 }), updateAvatar);
-router.post('/me', signOut);
 
 module.exports = router;
